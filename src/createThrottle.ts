@@ -1,9 +1,9 @@
 /**
  * Represents a throttle mechanism.
- * @property {function(): boolean} check - Checks if a token is available.
+ * @property {function(): Promise<void>} wait - Waits for a token to be available.
  */
 export type Throttle = {
-  check: () => boolean;
+  wait: () => Promise<void>;
 };
 
 /**
@@ -36,16 +36,16 @@ export const createThrottle = (
     lastRefill = now;
   };
 
-  const check = () => {
+  const wait = async () => {
     refill();
 
-    if (tokens > 0) {
-      tokens--;
-      return true;
+    while (tokens <= 0) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      refill();
     }
 
-    return false;
+    tokens--;
   };
 
-  return { check };
+  return { wait };
 };

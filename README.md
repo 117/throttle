@@ -32,15 +32,11 @@ import { createThrottle } from "@117/throttle";
 
 const throttle = createThrottle({ limit: 5, interval: 1000 });
 
-const work = () => {
-    if (throttle.check()) {
-        console.log("request allowed, processing work");
-    } else {
-        console.log("request blocked, please wait");
-    }
+const work = async () => {
+    await throttle.wait();
+    console.log("request allowed, processing work");
 };
 
-// Simulate requests
 setInterval(work, 200);
 ```
 
