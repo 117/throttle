@@ -27,21 +27,17 @@ export const createThrottle = (
   let tokens = limit;
   let lastRefill = Date.now();
 
-  const refill = () => {
+  const wait = async (): Promise<void> => {
     const now = Date.now();
-    const elapsed = now - lastRefill;
-    const newTokens = Math.floor(elapsed / interval) * limit;
 
-    tokens = Math.min(limit, tokens + newTokens);
-    lastRefill = now;
-  };
-
-  const wait = async () => {
-    refill();
+    if (now - lastRefill >= interval) {
+      tokens = limit;
+      lastRefill = now;
+    }
 
     while (tokens <= 0) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      refill();
+      await new Promise((resolve) => setTimeout(resolve, interval));
+      tokens++;
     }
 
     tokens--;
