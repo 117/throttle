@@ -27,7 +27,7 @@ export const createThrottle = (
   let tokens = limit;
   let lastRefill = Date.now();
 
-  const refillTokens = () => {
+  const refill = () => {
     const now = Date.now();
     const elapsed = now - lastRefill;
     const newTokens = Math.floor(elapsed / interval) * limit;
@@ -37,7 +37,7 @@ export const createThrottle = (
   };
 
   const check = () => {
-    refillTokens();
+    refill();
 
     if (tokens > 0) {
       tokens--;
