@@ -3,7 +3,7 @@
 ![version](https://img.shields.io/jsr/v/%40117/throttle?style=flat-square&color=%23ff51bc&label=version)
 ![status](https://img.shields.io/github/actions/workflow/status/117/throttle/deploy.yml?style=flat-square)
 
-A throttle function implementation for Deno that manages request rates.
+A token bucket rate limiter for Deno.
 
 ## Contents
 
