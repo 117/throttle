@@ -15,7 +15,7 @@ A token bucket rate limiter for Deno.
 ## Features
 
 - [x] Simple and easy to use.
-- [x] Regulates access to functions based on defined limits.
+- [x] Rate limiting based on token bucket algorithm.
 
 ## Install
 
@@ -33,7 +33,7 @@ import { createThrottle } from "@117/throttle";
 const throttle = createThrottle({ limit: 5, interval: 1000 });
 
 const work = () => {
-    if (throttle.canProceed()) {
+    if (throttle.check()) {
         console.log("request allowed, processing work");
     } else {
         console.log("request blocked, please wait");
